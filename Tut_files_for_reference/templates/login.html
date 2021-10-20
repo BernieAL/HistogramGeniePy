@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+    Login Page
+{% endblock  %}
+
+
+<!-- FOrm action is URL to redirect to on submission -->
+<!-- in this case we use # which means we go back to the same page, staying on same page-->
+<!-- Method is post because we are posting info and not getting informaton-->
+<!-- normally if we put get, we plan to fill this form with info we got from the server
+and in this case we are sending info to the server from the user -->
+{% block content %}
+    <form action="#"method="POST">
+        <p>Name:</p>
+        <p><input type="text" name="name"></p>
+        <p>Email:</p>
+        <p><input type="text" name="email"></p>
+        <p><input type="submit"value= "submit">
+        </p>
+    </form>
+{% endblock  %}

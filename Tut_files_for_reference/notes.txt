@@ -1,0 +1,348 @@
+__name__  is the name of the applications module or package.
+it is a shortcut appropriate for most cases.
+It tells Flask where to look for resources like templates and static files
+
+:::::SET UP::::
+
+
+
+-------------------------------------------------------
+:::::ROUTING::::::
+
+
+    Handling incoming web request and sending responses
+
+    @app.route is a decorateor function that turns a regular python function into a flask
+    view function -> this converts the functions return value into an http response to be displayed by an HTTP client.
+
+    :::ROUTE EXAMPLES:::
+
+
+    @app.route("/<name>")
+    def user(name):
+        return f"Hello{name}!"
+
+    Anything typed in between <> gets passed to the parameter in the function
+    Ex. <Bernard> 
+        def user(Bernard)
+        return f"hello {Bernard}
+
+    PASSING IN PARAM http://localhost:5000/Bernard
+        Hello Bernard
+
+
+    ------
+
+    REDIRECT WITH PASSING ARGS
+
+    @app.route('/admin')
+    def admin():
+    return redirect(url_for("user",name="Admin"))
+
+    this redirects to user function which displays user page and passes 
+    admin as the value for the name param
+
+        Side note:
+            Putting slash after page allows you to put a slash when requesting or no slash
+             @app.route('/admin/')
+             Ex.
+             this would  handle  .../admin and .../admin/
+    -------
+
+    RENDER TEMPLATE
+
+     @app.route('/')
+     def home():
+        return render_template("index.html")
+
+    
+------------------------------------
+------------------------------------
+:::TEMPLATES:::
+
+    templates folder needs to be inside same directory of python script that is 
+    running the website -> the script that has flask in it
+
+    :::RENDERING TEMPLATES:::
+
+    @app.route('/')
+    def home():
+        return render_template("index.html")
+    ------------------
+    We can pass info from backend to front end template using jinja expressions
+    We render the index.html file, and we pass the value of name into the template var content
+    the template then displays what we passed to it.
+    
+    Content receives the value of name from route handler function
+    name is populated from the arg being passed as a param to the URL
+
+
+    Flow of passing val to query param
+    Qeury param then passes val to render_template function
+    render_template function put val into template var, and renders template with this value
+    
+
+    url:
+
+    localhost../Bernard
+
+    (name = Bernard)
+    ------
+    (in flask app)
+    @app.route("/name")    
+    def home(name):
+        return render_template("index.html",content=name,car=BMW)
+                                           --> (content = Bernard)
+                                           --> (car = BMW)
+    ------
+    (in template - index.html)
+    <html>
+        <head>
+            <title>Home page</title>
+        </head>
+        <body>
+            <h1> Home page</h1>
+            <p> {{content}} </p>       --> {{content = Bernard}}
+            <p> {{car}}</p>            --> {{car = bmw}}
+        </body>
+    </html>
+    ---------------------
+    
+    :::WRITING PTYHON IN TEMPLATE:::
+
+    Using Jinja expression brackets {% %}
+    We can write some python in the templates to do things
+
+     <html>
+        <head>
+            <title>Home page</title>
+        </head>
+        <body>
+            <h1> Home page</h1>
+                {% for x in range(0,10) %}       
+                    <p>hello</p>             --> This prints Hello 10 times
+                {% endfor %}     
+
+            <h2> Snippet 2</h2>
+                {% for x in range(0,10) %}
+                    {% if x % 2 == 1 %}     --> if x % 2 == 0, print 'x'
+                        <p> x </p>
+                        <p> {{x}} </p>      --> print out value of x
+                    {%endif%}
+                    <p> Hello       
+        </body>
+    </html>
+    --------
+
+    :::PASSING LIST TO TEMPLATE:::
+
+    def home(name):
+        return render_template('index.html',content=["tim","joe","mike"])
+
+    <html>
+        <head>
+            <title>Home page</title>
+        </head>
+        <body>
+            {%for name in content %}
+                <h3> {{name}} </h3>
+                {% if x == "tim" %}
+                    <h1> {{x}} </h1>
+                {% else %}
+                
+                {% endif %}}
+            {%endfor%}
+        </body>
+
+    -----------------
+    ::: TEMPLATE INHERITANCE AND ADDING BOOTSTRAP :::
+
+        Making reusable snippets to avoid have to write duplicate code
+        like inheriting navbar on all pages
+
+        We can define a base template that all children inherit from
+
+        This is done by using blocks. Blocks are sections that child templates will fill in with their own
+        specific code. The children templates extend the parent templates and then provide their own custom code into the parent's 
+        blocks.
+        Its called of like method overriding in java, where the inheriting child class overrides the parent implementation of the code 
+        by providing its own implementation
+
+        Its best for templates to be in same directory so you can just write the template names without
+        having to do relative location path
+
+        (base.html)
+
+        <html>
+        <head>
+            <title> {% block title%} {%endblock%}</title>    --> we define a block called title
+        </head>
+        <body>
+            <h1> Bernie's site </h1>
+            {%block content%} 
+            {%endblock%}
+        </body>
+        -----
+
+        (index.html - child template inheriting from parent base.html)
+
+        {% extends "base.html"}
+        {% block title %} Home page {% endblock %}     --> Coming from parent base.html
+        {% block content%}                             --> Coming from parent base.html
+            <h1> Test </h1>
+        {%endblock%}    
+
+        ------
+        :::ADDING BOOTSTRAP
+
+        copy CSS cdn from BOOTSTRAP site. 
+        paste inside head tag of base.html, put in head before everything else
+
+        copy JS scripts and put them at end of body in base.html
+
+        We can then take BOOTSTRAP components and put them in our base.html template
+        These site-wide components like navbar will be available to all children who inherit from the parent template
+
+
+------------------------------
+------------------------------
+------------------------------
+
+    :::HTTP METHODS: GET AND POST
+
+     GET and POST are methods for sending info to server or end-user
+     GET sends info to client- unsecurely
+     POST is secure version of this, not saved on web server
+
+     by default, routes only handle GET
+     To handle POST, we need to configure the route handler to accept POST as well
+
+     @app.route("/login",methods=["POST","GET"])
+     def login():
+        return render_template()
+    
+     @app.route("/<usr>")
+     def user(usr):
+        return f"<h1>{usr}</h1>"
+    
+    :::GETTING DATA FROM POST REQUEST - FORM SUBMISSION
+
+        (form in login.html)
+            <form action="#" method="POST">
+                <input type="text" name="name"></input>
+                <input type="text" name="email"></input>
+                <input type="submit" value="submit"
+            </form>
+        
+        (in flask app)
+        @app.route('/',methods=['POST','GET'])
+        def login():
+            if request.method == "POST":
+                name = request.form['name']
+                email = request.form['email']
+
+
+
+        ::::SESSIONS
+
+            session only lives while user is currently on site
+            its relavant user data
+            temp, stored on server
+            designed for quick access of info and a way to pass stuff around server
+            when you close the browser, the session data is deleted from the browser
+                requiring a new session for the user to be set up
+
+
+            session data lives in temporary directory on server
+            we can set how long we want the info to be stored by using "permanent sessions"
+
+
+
+            To create new piece of info in current session 
+                session[nameOfKey] = some specific value
+
+            To access Session information
+                first check if any info in session 
+
+            @app.route("/login",methods=["POST","GET"])
+            def login():
+                if request.method == "POST":
+                    user= request.form["name"]
+                    session["user"] = user                  --> setting up session data, stores as dict
+                    return redirect(url_for("user",user=user))
+                else:
+                    return render_template("login.html")
+
+            @app.route("/user")
+            def user():
+                if "user" in session:                   --> check if current user is in session object, meaning they have logged in
+                    user = session["user"]             
+                    return f"<h1> user </h1>
+                else:
+                    return redirect(url_for("login"))
+
+            
+            ::::SECRET KEY
+            All session data is encrypted and stored on the server
+            this means we need to define a secret key to decrypt and encrypt key
+            Below our flask instance creation in the top section of the file, you can define a secret key
+                
+                app.secret_key="someString"
+
+            :::: MANUAL CLEARING OF SESSION DATA  
+
+            like when someone logs out, you want to clear out their session
+            This can be done by:
+                session.pop("user",None)
+                session.pop("email",None)
+
+            @app.route("/logout")
+            def logout():
+                session.pop("user",None)
+                session.pop("email",None)
+                return redirect(url_for("login"))
+
+
+        :::PERMANENT SESSIONS
+
+            session data is stored for longer than when youre in the browser
+
+            from datetime import timedelta
+            app.permanent_session_lifetime = timedelta(days=5)  -->stores session data for 5 days
+                                                                   could also do minutes,
+            @app.route("/login",methods=["POST","GET"])
+            def login():
+            if reqest.method == "POST":
+                session.permanent = true            --> This makes session permanent for however defined above
+                user = request.form                 --> by default its false and lasts only as long as the browser is open
+                .......
+
+
+
+---------------------------------
+---------------------------------
+::: RUNNING FLASK APP :::
+
+
+
+
+To run flask web app, we tell Flask where to find the application file
+by setting the FLASK_APP environment variable
+
+    export FLASK_APP=hello
+
+and config to run in dev mode  
+
+    export FLASK_ENV=development
+
+and to actually run
+
+    flask run
+
+
+
+    DEBUG
+
+        in app.run, we can define and set debug to true
+        allows us to auto reload the server when we make changes to our application, rather than
+        having to relaunch the server each time we make a change
