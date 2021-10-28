@@ -68,8 +68,10 @@ def upload_image():
         
         
         #pass path to run_img function
-        run_img.run_img_func(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-        return render_template('upload.html',filename=filename)
+        colors = run_img.run_main(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+        print(colors)
+        
+        return render_template('upload.html',filename=filename,colors=colors)
     
     else:
         flash('Image submitted is not allowed file type')

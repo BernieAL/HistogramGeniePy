@@ -17,6 +17,13 @@
 	<div>
 		<img src="{{ url_for('display_image', filename=filename) }}">
 	</div>
+	<div>
+		{% for color in colors  %}
+			<div style="height: 50px; width: 50px; background-color: {{ color }}">
+				
+			</div>
+		{% endfor %}
+	</div>
 {% endif %}
 
 
