@@ -68,9 +68,11 @@ def upload_image():
         
         
         #pass path to run_img function
+        #get returned dominate colors value(s) from run_main, store in colors
         colors = run_img.run_main(os.path.join(app.config['UPLOAD_FOLDER'],filename))
         print(colors)
         
+        #pass dominate colors as array to template for dynamic rendering as inline css
         return render_template('upload.html',filename=filename,colors=colors)
     
     else:

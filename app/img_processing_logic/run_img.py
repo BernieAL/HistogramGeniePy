@@ -68,8 +68,40 @@ def get_colors(image,number_of_colors,show_chart):
 
     return hex_colors
 
+# https://www.cined.com/film-color-schemes-cinematic-color-design/
+# https://coolors.co/image-picker
+# https://planetcalc.com/7661/
+#def get_complimentary():
+# https://stackoverflow.com/questions/40233986/python-is-there-a-function-or-formula-to-find-the-complementary-colour-of-a-rgb
+#this function will calculate the complimentary colors of the dominant colors to be returned along with dom colors in run_main
+
+
+#def get_analogous
+
+#def get_tradiac
+
+#def get_split
+
+
+
+
+
+
+
+
+
+
+
+#driver for all image processing functions
+#takes in original target image and passes to corresponding images
+#returns dominant color values and complementary 
+
 def run_main(image):
-    return (get_colors(get_image(image),2,True))
+    
+    dominant_colors = (get_colors(get_image(image),2,True))
+    return dominant_colors
+    # complimentary_colors = (dominant_colors)
+    # return dominant_colors,complimentary_colors
 
 
 # image = (r"C:\Users\balma\Documents\Programming\Python\Learning-practice\flask\Histogram_Genie_Dominant_Color\app\static\uploads\colors.jpg")

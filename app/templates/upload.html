@@ -18,10 +18,9 @@
 		<img src="{{ url_for('display_image', filename=filename) }}">
 	</div>
 	<div>
+		<h2>DOMINANT COLORS</h2>
 		{% for color in colors  %}
-			<div style="height: 50px; width: 50px; background-color: {{ color }}">
-				
-			</div>
+			<div style="height: 50px; width: 50px; background-color: {{ color }}"></div>
 		{% endfor %}
 	</div>
 {% endif %}
