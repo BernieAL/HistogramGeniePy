@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+  }
+  
+  html {
+    font-size: 62.5%;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.4rem;
+  }
+  
+  h1 {
+    margin-bottom: 2rem;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .box-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-bottom: 5rem;
+  }
+  
+  .color {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    letter-spacing: 0.3rem;
+    height: 15rem;
+    width: 15rem;
+    padding: 2rem 1rem;
+    color: #eee;
+    border-radius: 2rem;
+    overflow-y: hidden;
+    margin-bottom: 2rem;
+  }
+  
+  .color:hover {
+    cursor: pointer;
+    transition: all 0.5s;
+    transform: scale(1.1);
+  }
+  
+  .hex:hover {
+    cursor: pointer;
+    transition: all 0.5s;
+    transform: scale(1.2);
+  }
+  
+  .hex {
+    text-align: center;
+    font-size: 2.4rem;
+  }
+  
+  .color--1 {
+    background: #f08c00;
+  }
+  .color--2 {
+    background: #c7ac5a;
+  }
+  
+  .color--3 {
+    background: #58db53;
+  }
+  
+  .color--4 {
+    background: #33c1d5;
+  }
+  
+  .color--5 {
+    background: #9c85e1;
+  }
+  

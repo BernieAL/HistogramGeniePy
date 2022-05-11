@@ -7,16 +7,9 @@
 # https://towardsdatascience.com/color-identification-in-images-machine-learning-application-b26e770c4c71
 
 
-import json
-import colorsys
-from scipy.sparse import dok
-from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
-import numpy as np
+
+
 import cv2
-from collections import Counter
-from skimage.color import rgb2lab, deltaE_cie76
-import os
 from colorthief import ColorThief
 
 
@@ -32,7 +25,7 @@ from colorthief import ColorThief
 
 #this is hardcoded in for testing this file without running the server
 #the actual image path will be passed in from main.py
-image_path = (r"C:\Users\balma\Documents\Programming\Python\Learning-practice\flask\Histogram_Genie_Dominant_Color\app\static\uploads\colors.jpg")
+# image_path = (r"C:\Users\balma\Documents\Programming\Python\Learning-practice\flask\Histogram_Genie_Dominant_Color\app\static\uploads\colors.jpg")
 
 
 
@@ -42,9 +35,9 @@ def get_image(image_path):
     image=cv2.imread(image_path)
     image_as_rgb = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
     # print(image_as_rgb)
+    return image_as_rgb
 
 def get_dominant_and_palette(image_path):
-
     color_thief = ColorThief(image_path)
     dom_color = color_thief.get_color(quality=1)
     palette = color_thief.get_palette(color_count=5)
@@ -76,42 +69,24 @@ def get_complementary(palette):
         counter+=1
        
         complementary_vals.append(complement(color))
-    print(f'original palette colors {palette}')
-    print(f'complementary{complementary_vals}')        
+    # print(f'original palette colors {palette}')
+    # print(f'complementary{complementary_vals}')        
+    return complementary_vals
 
 
-get_image(image_path)
-dom_color = (get_dominant_and_palette(image_path))[0]
-palette = (get_dominant_and_palette(image_path))[1]
-get_complementary(palette)
 
 
 
 def run_main(image):
-    # dominant_colors = (get_colors(get_image(image)))
+    # image_as_rgb = get_image(image)
+    # print(image_as_rgb)
+    # dom_color = (get_dominant_and_palette(image_as_rgb))[0]
+    palette = (get_dominant_and_palette(image))[1]
+    complementary_vals = get_complementary(palette)
+    return palette,complementary_vals
     
-    # # return dominant_colors
-    # complimentary_colors = (dominant_colors)
-    # # print(f"COMPLIMENTARY COLORS{complimentary_colors}")
 
-    # colors = {
-    #     "dominant":dominant_colors,
-    #     "complimentary":complimentary_colors,
-    #     # "analog":analogous_colors,
-    #     # "triadic":triadic,
-    #     # "split":split
-    # }
-    # return dominant_colors,complimentary_colors
-
-
-    pass
+    
 # run_main(image)
 # print(get_colors(get_image(image),2,True))
 
-
-# class ColorThief(object):
-
-#     def __init__(self,file):
-#         "one color thief instance for each image"
-
-#     def color:

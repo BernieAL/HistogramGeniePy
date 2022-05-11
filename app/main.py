@@ -69,26 +69,12 @@ def upload_image():
         
         
         #pass path to run_img function
-        #get returned dominate colors value(s) from run_main, store in colors object
-        #colors is an object that has dom and comp colors nested
-        #dom and comp colors are arrays of arrays
-        colors = run_img.run_main(img_file)
-        
-        dom_colors1 = colors['dominant'][0]
-        dom_colors2 = colors['dominant'][1]
+        palette,comeplementary_colors = run_img.run_main(img_file)
+        print(comeplementary_colors)
 
-        comp_colors1 = colors['complimentary'][0]
-        comp_colors2 = colors['complimentary'][1]
-        
-        print(dom_colors1)
-        print(dom_colors2)
-        print(comp_colors1)
-        print(comp_colors2)
 
-        
-        
         #pass dominate colors as array to template for dynamic rendering as inline css
-        return render_template('upload.html',filename=filename)
+        return render_template('upload.html',filename=filename,palette = palette,comeplementary_colors=comeplementary_colors)
     
     else:
         flash('Image submitted is not allowed file type')
