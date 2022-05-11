@@ -13,17 +13,6 @@
 	{% endwith %}
 </p>
 
-{% if filename %}
-	<div>
-		<img src="{{ url_for('display_image', filename=filename) }}">
-	</div>
-	<div>
-		<h2>DOMINANT COLORS</h2>
-		{% for color in colors  %}
-			<div style="height: 50px; width: 50px; background-color: {{ color }}"></div>
-		{% endfor %}
-	</div>
-{% endif %}
 
 
 <form method="post" action="/" enctype="multipart/form-data">
@@ -36,3 +25,22 @@
 		<input type="submit" value="Submit">
 	</p>
 </form>
+<br>
+
+{% if filename %}
+	<div>
+		<img src="{{ url_for('display_image', filename=filename) }}">
+	</div>
+	<div>
+		<h2>DOMINANT COLORS</h2>
+			Dom 1: {{colors['dominant'][0]}}
+			<br>
+			Dom 2: {{colors['dominant'][1]}}
+		<h2>COMPLIMENTARY COLORS</h2>
+			Comp 1: {{colors['complimentary'][0]}}
+			<br>
+			Comp 2: {{colors['complimentary'][1]}}
+			 
+			<p style="background-color:#{{colors['complimentary'][0]}}">TESt</p>
+	</div>
+{% endif %}

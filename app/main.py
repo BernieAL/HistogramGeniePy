@@ -64,16 +64,31 @@ def upload_image():
     """
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+        img_file = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+        file.save(img_file)
         
         
         #pass path to run_img function
-        #get returned dominate colors value(s) from run_main, store in colors
-        colors = run_img.run_main(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-        print(colors)
+        #get returned dominate colors value(s) from run_main, store in colors object
+        #colors is an object that has dom and comp colors nested
+        #dom and comp colors are arrays of arrays
+        colors = run_img.run_main(img_file)
+        
+        dom_colors1 = colors['dominant'][0]
+        dom_colors2 = colors['dominant'][1]
+
+        comp_colors1 = colors['complimentary'][0]
+        comp_colors2 = colors['complimentary'][1]
+        
+        print(dom_colors1)
+        print(dom_colors2)
+        print(comp_colors1)
+        print(comp_colors2)
+
+        
         
         #pass dominate colors as array to template for dynamic rendering as inline css
-        return render_template('upload.html',filename=filename,colors=colors)
+        return render_template('upload.html',filename=filename)
     
     else:
         flash('Image submitted is not allowed file type')
