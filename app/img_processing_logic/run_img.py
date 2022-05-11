@@ -23,6 +23,10 @@ from colorthief import ColorThief
 #color thief resource 
 # https://github.com/fengsp/color-thief-py
 
+#hilo and complement resource
+# https://stackoverflow.com/a/40234924
+
+
 #COLOR IDENTIFICATION SECTION
 #here we identify colors from an image and display top colors as pie chart
 
@@ -38,22 +42,52 @@ def get_image(image_path):
     image=cv2.imread(image_path)
     image_as_rgb = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
     # print(image_as_rgb)
-    
+
+def get_dominant_and_palette(image_path):
+
     color_thief = ColorThief(image_path)
     dom_color = color_thief.get_color(quality=1)
-    palette = color_thief.get_palette(color_count=4)
-    print(palette)
-    # colors, count = np.unique(image_as_rgb.reshape(-1,image_as_rgb.shape[-1]), axis=0, return_counts=True)
-    # return colors[count.argmax()]
+    palette = color_thief.get_palette(color_count=5)
+    # print(dom_color)
+    # print(palette)
+    return dom_color,palette
+
+def hilo(a,b,c):
+
+    if c < b: b, c = c, b
+    if b < a: a, b = b, a
+    if c < b: b, c = c, b
+    return a + c
+
+def complement(color):
+    #unpacks colors sequentially from color tuple
+    r,g,b = color
+    
+    k = hilo(r, g, b)
+    return tuple(k - u for u in (r, g, b))
+
+#use palette to generate complimentary colors
+#traverse tuples in palette
+#for each tuple (color), get its complimentary color by calling complement(color)
+def get_complementary(palette):
+    complementary_vals = []
+    counter = 0
+    for color in palette:
+        counter+=1
+       
+        complementary_vals.append(complement(color))
+    print(f'original palette colors {palette}')
+    print(f'complementary{complementary_vals}')        
+
 
 get_image(image_path)
+dom_color = (get_dominant_and_palette(image_path))[0]
+palette = (get_dominant_and_palette(image_path))[1]
+get_complementary(palette)
 
-def get_complimentary():
-    pass
+
 
 def run_main(image):
-    
-    
     # dominant_colors = (get_colors(get_image(image)))
     
     # # return dominant_colors
@@ -71,7 +105,7 @@ def run_main(image):
 
 
     pass
-    run_main(image)
+# run_main(image)
 # print(get_colors(get_image(image),2,True))
 
 
