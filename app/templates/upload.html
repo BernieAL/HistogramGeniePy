@@ -32,42 +32,42 @@
 	<div>
 		<img src="{{ url_for('display_image', filename=filename) }}">
 	</div>
-	<div>
-		<div class="container">
-			<h1>Press space bar to generate</h1>
-			<div class="box-container">
-			  <div class="color-conatiner">
-				<div class="color color--1"></div>
-				<h2 class="hex">#f08c00</h2>
-			  </div>
-			  <div class="color-conatiner">
-				<div class="color color--2"></div>
-				<h2 class="hex">#c7ac5a</h2>
-			  </div>
-			  <div class="color-conatiner">
-				<div class="color color--3"></div>
-				<h2 class="hex">#58db53</h2>
-			  </div>
-			  <div class="color-conatiner">
-				<div class="color color--4"></div>
-				<h2 class="hex">#33c1d5</h2>
-			  </div>
-			  <div class="color-conatiner">
-				<div class="color color--5"></div>
-				<h2 class="hex">#9c85e1</h2>
-			  </div>
-			</div>
-		  </div>
-	   
-	</div>
+	
 {% endif %}
-<!-- <script src="../static/script.js" ></script> -->
+<div>
+	<div class="container">
+		<h1>Press space bar to generate</h1>
+		<div class="box-container">
+		  <div class="color-container">
+			<div class="color color--1"></div>
+			<h2 class="hex">#f08c00</h2>
+		  </div>
+		  <div class="color-container">
+			<div class="color color--2"></div>
+			<h2 class="hex">#c7ac5a</h2>
+		  </div>
+		  <div class="color-container">
+			<div class="color color--3"></div>
+			<h2 class="hex">#58db53</h2>
+		  </div>
+		  <div class="color-container">
+			<div class="color color--4"></div>
+			<h2 class="hex">#33c1d5</h2>
+		  </div>
+		  <div class="color-container">
+			<div class="color color--5"></div>
+			<h2 class="hex">#9c85e1</h2>
+		  </div>
+		</div>
+	  </div>
+</div>
+<script src="../static/script.js" ></script>
 
-<script>
+<!-- <script>
 
 	/* if file, make dom elements for colors */
 	
     t = document.createElement('p')
     t.innerText = "HELLO"
 	document.body.appendChild(t)
-</script>
+</script> -->

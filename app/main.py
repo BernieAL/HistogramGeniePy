@@ -70,7 +70,8 @@ def upload_image():
         
         #pass path to run_img function
         palette,comeplementary_colors = run_img.run_main(img_file)
-        print(comeplementary_colors)
+        print(f"Original palette {palette}")
+        print(f"comeplementary_colors {comeplementary_colors}")
 
 
         #pass dominate colors as array to template for dynamic rendering as inline css
