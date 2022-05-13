@@ -10,6 +10,7 @@ from flask import Flask, render_template,request
 import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
+import json
 
 
 
@@ -69,13 +70,17 @@ def upload_image():
         
         
         #pass path to run_img function
-        palette,comeplementary_colors = run_img.run_main(img_file)
-        print(f"Original palette {palette}")
-        print(f"comeplementary_colors {comeplementary_colors}")
-
+        paletteColors,complementary_colors = run_img.run_main(img_file)
+        # print(f"Original palette {paletteColors}")
+        # print(f"comeplementary_colors {complementary_colors}")
+        colors = {
+            'palette':paletteColors,
+            'complementary': complementary_colors
+        }
 
         #pass dominate colors as array to template for dynamic rendering as inline css
-        return render_template('upload.html',filename=filename,palette = palette,comeplementary_colors=comeplementary_colors)
+        return render_template('upload.html',filename=filename,palette = paletteColors,
+            comeplementary_colors=complementary_colors,colors = json.dumps(colors))
     
     else:
         flash('Image submitted is not allowed file type')

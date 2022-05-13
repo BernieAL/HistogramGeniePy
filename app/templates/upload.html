@@ -34,40 +34,105 @@
 	</div>
 	
 {% endif %}
-<div>
-	<div class="container">
-		<h1>Press space bar to generate</h1>
-		<div class="box-container">
-		  <div class="color-container">
-			<div class="color color--1"></div>
-			<h2 class="hex">#f08c00</h2>
-		  </div>
-		  <div class="color-container">
-			<div class="color color--2"></div>
-			<h2 class="hex">#c7ac5a</h2>
-		  </div>
-		  <div class="color-container">
-			<div class="color color--3"></div>
-			<h2 class="hex">#58db53</h2>
-		  </div>
-		  <div class="color-container">
-			<div class="color color--4"></div>
-			<h2 class="hex">#33c1d5</h2>
-		  </div>
-		  <div class="color-container">
-			<div class="color color--5"></div>
-			<h2 class="hex">#9c85e1</h2>
-		  </div>
-		</div>
-	  </div>
-</div>
-<script src="../static/script.js" ></script>
-
-<!-- <script>
-
-	/* if file, make dom elements for colors */
+<div class="color-output-section">
 	
-    t = document.createElement('p')
-    t.innerText = "HELLO"
-	document.body.appendChild(t)
-</script> -->
+	<div class="main-container">
+
+		
+		<h1>Original</h1>
+		<div class="box-container">
+			<div class="color-container">
+				<h2 class="hex">#f08c00</h2>
+				<div class="color color--1"></div>
+				
+			</div>
+			<div class="color-container">
+				<h2 class="hex">#c7ac5a</h2>
+				<div class="color color--2"></div>
+			</div>
+			<div class="color-container">
+				<h2 class="hex">#58db53</h2>
+				<div class="color color--3"></div>
+			</div>
+			<div class="color-container">
+				<h2 class="hex">#33c1d5</h2>
+				<div class="color color--4"></div>
+				
+			</div>
+			<div class="color-container">
+				<h2 class="hex">#9c85e1</h2>
+				<div class="color color--5"></div>
+			</div>
+		</div>
+
+		<!-- Complementary section -->
+		<div class="box-container">
+			<div class="color-container">
+				<div class="color color--1"></div>
+				<h2 class="hex">#f08c00</h2>
+			</div>
+			<div class="color-container">
+				<div class="color color--2"></div>
+				<h2 class="hex">#c7ac5a</h2>
+			</div>
+			<div class="color-container">
+				<div class="color color--3"></div>
+				<h2 class="hex">#58db53</h2>
+			</div>
+			<div class="color-container">
+				<div class="color color--4"></div>
+				<h2 class="hex">#33c1d5</h2>
+			</div>
+			<div class="color-container">
+				<div class="color color--5"></div>
+				<h2 class="hex">#9c85e1</h2>
+			</div>	
+		</div>
+		<h1>Complementary</h1>
+
+	</div>
+</div>
+<!-- <script src="../static/script.js" ></script> -->
+
+<script>
+
+// passed in from flask req
+colors  = JSON.parse('{{ colors | safe}}')
+palette_values =  colors['palette']
+complementary_values= colors['complementary']
+
+console.log(palette_values)
+console.log(complementary_values)
+
+window.onload = ()=>{
+    color_hexCode = "#####"
+
+    // parent_color_box_container = document.querySelector('.box-container')
+    // // console.log(parent_color_box_container)
+    // /*Make these and append to parent_color_box
+    //     <div class="color-container">
+	// 		<div class="color color--1"></div>
+	// 		<h2 class="hex">#f08c00</h2>
+	// 	</div>
+    // */
+    // color_class_innerDiv = document.createElement('div')
+    // color_class_innerDiv.className = "color color--1"
+    
+    // hex_class_label = document.createElement('h2')
+    // hex_class_label.class = "hex"
+    // hex_class_label.innerText = color_hexCode
+    
+    // color_container = document.createElement('div')
+    // color_container.className = "color-container"
+    
+    // color_container.appendChild(color_class_innerDiv)
+    // color_container.appendChild(hex_class_label)
+
+    // parent_color_box_container.appendChild(color_container)
+    
+    
+}
+
+
+
+</script>

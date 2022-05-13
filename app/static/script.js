@@ -28,4 +28,7 @@ window.onload = ()=>{
 
     parent_color_box_container.appendChild(color_container)
     
+    
 }
+
+   

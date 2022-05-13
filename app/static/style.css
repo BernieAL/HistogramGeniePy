@@ -17,12 +17,12 @@
     margin-bottom: 2rem;
   }
   
-  .container {
+  .main-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    margin-top: 5rem;
   }
   
   .box-container {
@@ -32,7 +32,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 1.2rem;
-    margin-bottom: 5rem;
+    margin-bottom: 1rem;
   }
   
   .color {
