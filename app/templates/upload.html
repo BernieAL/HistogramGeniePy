@@ -48,7 +48,8 @@ https://codepen.io/ryandelos/pen/oNGKrXV
 		
 		<div class="colors-output">
 			<h1>Original</h1>
-			<div class="box-container">
+			
+			<div id='original-palette' class="box-container">
 				<!-- <div class="color-container">
 					<h2 class="hex">#f08c00</h2>
 					<div class="color color--1"></div>
@@ -73,7 +74,7 @@ https://codepen.io/ryandelos/pen/oNGKrXV
 			</div>
 
 			<!-- Complementary section -->
-			<div class="box-container">
+			<div id='complementary'class="box-container">
 				<!-- <div class="color-container">
 					<div class="color color--1"></div>
 					<h2 class="hex">#f08c00</h2>
@@ -118,20 +119,27 @@ console.log(complementary_values)
 
 
 
-function generateShapeMain(values){
+function generateShapeMain(values,section){
 	for (i = 0; i<values.length;i++){
 		r = values[i][0]
 		g = values[i][1]
 		b = values[i][2]
 
-		generateShapeHelper(r,g,b)
+		generateShapeHelper(r,g,b,section)
 	}
 }
 
 
-function generateShapeHelper(r,g,b){
-		color_hexCode = "#####"
-		parent_color_box_container = document.querySelector('.box-container')
+function generateShapeHelper(r,g,b,section){
+		
+
+		//section introduced to target seperate divs for organization
+		if (section == 0){
+			parent_color_box_container = document.querySelector('#original-palette')
+		} else if (section == 1 ){
+			parent_color_box_container = document.querySelector('#complementary')
+		}
+		
 		// console.log(parent_color_box_container)
 		/*Make these and append to parent_color_box
 		    <div class="color-container">
@@ -158,7 +166,7 @@ function generateShapeHelper(r,g,b){
 }
 
 
-generateShapeMain(palette_values)
-generateShapeMain(complementary_values)
+generateShapeMain(palette_values,0)
+generateShapeMain(complementary_values,1)
 
 </script>
