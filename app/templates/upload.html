@@ -1,3 +1,8 @@
+<!-- color palette css and html
+https://codepen.io/ryandelos/pen/oNGKrXV
+-->
+
+
 <!doctype html>
 <link rel="stylesheet" href="../static/style.css">
 <title>Python Flask File Upload Example</title>
@@ -28,68 +33,71 @@
 </form>
 <br>
 
-{% if filename %}
-	<div>
-		<img src="{{ url_for('display_image', filename=filename) }}">
-	</div>
-	
-{% endif %}
-<div class="color-output-section">
+
+<div class="image-and-colors">
 	
 	<div class="main-container">
-
 		
-		<h1>Original</h1>
-		<div class="box-container">
-			<div class="color-container">
-				<h2 class="hex">#f08c00</h2>
-				<div class="color color--1"></div>
-				
-			</div>
-			<div class="color-container">
-				<h2 class="hex">#c7ac5a</h2>
-				<div class="color color--2"></div>
-			</div>
-			<div class="color-container">
-				<h2 class="hex">#58db53</h2>
-				<div class="color color--3"></div>
-			</div>
-			<div class="color-container">
-				<h2 class="hex">#33c1d5</h2>
-				<div class="color color--4"></div>
-				
-			</div>
-			<div class="color-container">
-				<h2 class="hex">#9c85e1</h2>
-				<div class="color color--5"></div>
-			</div>
+		<div class="image-output">
+			{% if filename %}
+				<div>
+					<img id='image-display' src="{{ url_for('display_image', filename=filename) }}">
+				</div>
+			{% endif %}
 		</div>
+		
+		<div class="colors-output">
+			<h1>Original</h1>
+			<div class="box-container">
+				<div class="color-container">
+					<h2 class="hex">#f08c00</h2>
+					<div class="color color--1"></div>
+					
+				</div>
+				<div class="color-container">
+					<h2 class="hex">#c7ac5a</h2>
+					<div class="color color--2"></div>
+				</div>
+				<div class="color-container">
+					<h2 class="hex">#58db53</h2>
+					<div class="color color--3"></div>
+				</div>
+				<div class="color-container">
+					<h2 class="hex">#33c1d5</h2>
+					<div class="color color--4"></div>
+					
+				</div>
+				<div class="color-container">
+					<h2 class="hex">#9c85e1</h2>
+					<div class="color color--5"></div>
+				</div>
+			</div>
 
-		<!-- Complementary section -->
-		<div class="box-container">
-			<div class="color-container">
-				<div class="color color--1"></div>
-				<h2 class="hex">#f08c00</h2>
+			<!-- Complementary section -->
+			<div class="box-container">
+				<div class="color-container">
+					<div class="color color--1"></div>
+					<h2 class="hex">#f08c00</h2>
+				</div>
+				<div class="color-container">
+					<div class="color color--2"></div>
+					<h2 class="hex">#c7ac5a</h2>
+				</div>
+				<div class="color-container">
+					<div class="color color--3"></div>
+					<h2 class="hex">#58db53</h2>
+				</div>
+				<div class="color-container">
+					<div class="color color--4"></div>
+					<h2 class="hex">#33c1d5</h2>
+				</div>
+				<div class="color-container">
+					<div class="color color--5"></div>
+					<h2 class="hex">#9c85e1</h2>
+				</div>	
 			</div>
-			<div class="color-container">
-				<div class="color color--2"></div>
-				<h2 class="hex">#c7ac5a</h2>
-			</div>
-			<div class="color-container">
-				<div class="color color--3"></div>
-				<h2 class="hex">#58db53</h2>
-			</div>
-			<div class="color-container">
-				<div class="color color--4"></div>
-				<h2 class="hex">#33c1d5</h2>
-			</div>
-			<div class="color-container">
-				<div class="color color--5"></div>
-				<h2 class="hex">#9c85e1</h2>
-			</div>	
+			<h1>Complementary</h1>
 		</div>
-		<h1>Complementary</h1>
-
 	</div>
 </div>
 <!-- <script src="../static/script.js" ></script> -->
@@ -104,35 +112,54 @@ complementary_values= colors['complementary']
 console.log(palette_values)
 console.log(complementary_values)
 
-window.onload = ()=>{
-    color_hexCode = "#####"
+// printVals(palette_values)
 
-    // parent_color_box_container = document.querySelector('.box-container')
-    // // console.log(parent_color_box_container)
-    // /*Make these and append to parent_color_box
-    //     <div class="color-container">
-	// 		<div class="color color--1"></div>
-	// 		<h2 class="hex">#f08c00</h2>
-	// 	</div>
-    // */
-    // color_class_innerDiv = document.createElement('div')
-    // color_class_innerDiv.className = "color color--1"
-    
-    // hex_class_label = document.createElement('h2')
-    // hex_class_label.class = "hex"
-    // hex_class_label.innerText = color_hexCode
-    
-    // color_container = document.createElement('div')
-    // color_container.className = "color-container"
-    
-    // color_container.appendChild(color_class_innerDiv)
-    // color_container.appendChild(hex_class_label)
+// j = palette_values[0][0]
+// console.log(j)
 
-    // parent_color_box_container.appendChild(color_container)
-    
-    
+
+
+function generateShapeMain(values){
+	for (i = 0; i<values.length;i++){
+		r = values[i][0]
+		g = values[i][1]
+		b = values[i][2]
+
+		generateShapeHelper(r,g,b)
+	}
 }
 
 
+function generateShapeHelper(r,g,b){
+		color_hexCode = "#####"
+		parent_color_box_container = document.querySelector('.box-container')
+		// console.log(parent_color_box_container)
+		/*Make these and append to parent_color_box
+		    <div class="color-container">
+				<div class="color color--1"></div>
+				<h2 class="hex">#f08c00</h2>
+			</div>
+		*/
+		color_class_innerDiv = document.createElement('div')
+		color_class_innerDiv.className = "color color"
+		color_class_innerDiv.style.background = 'rgb(' + [r,g,b].join(',') + ')';
+		
+		hex_class_label = document.createElement('h2')
+		hex_class_label.class = "hex"
+		hex_class_label.innerText = 'rgb(' + [r,g,b].join(',') + ')'
+		
+		color_container = document.createElement('div')
+		color_container.className = "color-container"
+		
+		color_container.appendChild(color_class_innerDiv)
+		color_container.appendChild(hex_class_label)
+
+		parent_color_box_container.appendChild(color_container)
+			
+}
+
+
+generateShapeMain(palette_values)
+generateShapeMain(complementary_values)
 
 </script>

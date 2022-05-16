@@ -11,6 +11,7 @@ import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 import json
+from PIL import Image
 
 
 
@@ -51,7 +52,7 @@ def upload_image():
         return redirect(request.url)
     
     file = request.files['file']
-
+    # file = file.resize(150,100),Image.ANTIALIAS)
     if file.filename == '':
         flash('No image for uploading')
         return redirect(request.url)
@@ -60,13 +61,14 @@ def upload_image():
     if file is populated and is of allowed type
     Pass it a filename and it will return a secure version of it. 
     This filename can then safely be stored on a regular file system and passed to os.path.join()
-    save file to upliad folder
+    save file to upload folder
     render upload.html and pass it the filename
     """
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         img_file = os.path.join(app.config['UPLOAD_FOLDER'],filename)
         file.save(img_file)
+        
         
         
         #pass path to run_img function

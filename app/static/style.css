@@ -17,6 +17,20 @@
     margin-bottom: 2rem;
   }
   
+  /* .image_output{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  } */
+
+  #image-display{
+      width: 50%;
+      height: 50%;
+  }
+
+  
+
   .main-container {
     display: flex;
     flex-direction: column;
@@ -63,10 +77,10 @@
   
   .hex {
     text-align: center;
-    font-size: 2.4rem;
+    font-size: 1.2rem;
   }
   
-  .color--1 {
+  /* .color--1 {
     background: #f08c00;
   }
   .color--2 {
@@ -84,4 +98,4 @@
   .color--5 {
     background: #9c85e1;
   }
-  
+   */
