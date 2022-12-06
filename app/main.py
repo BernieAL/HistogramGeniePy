@@ -46,51 +46,57 @@ def upload_form():
 @app.route('/upload',methods=['POST'])
 def upload_image():
     
+
+    
+    # print(request.get_data())
+    data = request.form['images']
+    print(data)
+
     # file = request.files
-    # # print(request.files)
+    # print(request.files)
     # for i in file:
     #     print(file[i])
     #     print(i)
     
-    """If file attribute not on reqeust"""
-    if 'file' not in request.files:
-        flash('NO file part')
-        return ('No file on reqeust')
+    # """If file attribute not on reqeust"""
+    # if 'file' not in request.files:
+    #     flash('NO file part')
+    #     return ('No file on reqeust')
     
-    file = request.files['file']
-    # file = file.resize(150,100),Image.ANTIALIAS)
-    if file.filename == '':
-        flash('No image for uploading')
-        return ('No file on reqeust')
+    # file = request.files['file']
+    # # file = file.resize(150,100),Image.ANTIALIAS)
+    # if file.filename == '':
+    #     flash('No image for uploading')
+    #     return ('No file on reqeust')
 
-    """
-    if file is populated and is of allowed type
-    Pass it a filename and it will return a secure version of it. 
-    This filename can then safely be stored on a regular file system and passed to os.path.join()
-    save file to upload folder
-    render upload.html and pass it the filename
-    """
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        img_file = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-        file.save(img_file)
+    # """
+    # if file is populated and is of allowed type
+    # Pass it a filename and it will return a secure version of it. 
+    # This filename can then safely be stored on a regular file system and passed to os.path.join()
+    # save file to upload folder
+    # render upload.html and pass it the filename
+    # """
+    # if file and allowed_file(file.filename):
+    #     filename = secure_filename(file.filename)
+    #     img_file = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+    #     file.save(img_file)
         
         
         
-        #pass path to run_img function
-        paletteColors,complementary_colors = run_img.run_main(img_file)
-        # print(f"Original palette {paletteColors}")
-        # print(f"comeplementary_colors {complementary_colors}")
-        colors = {
-            'palette':paletteColors,
-            'complementary': complementary_colors
-        }
+    #     #pass path to run_img function
+    #     paletteColors,complementary_colors = run_img.run_main(img_file)
+    #     # print(f"Original palette {paletteColors}")
+    #     # print(f"comeplementary_colors {complementary_colors}")
+    #     colors = {
+    #         'palette':paletteColors,
+    #         'complementary': complementary_colors
+    #     }
 
-        # #pass dominate colors as array to template for dynamic rendering as inline css
-        # return render_template('upload.html',filename=filename,palette = paletteColors,
-        #     comeplementary_colors=complementary_colors,colors = json.dumps(colors))
+    #     # #pass dominate colors as array to template for dynamic rendering as inline css
+    #     # return render_template('upload.html',filename=filename,palette = paletteColors,
+    #     #     comeplementary_colors=complementary_colors,colors = json.dumps(colors))
 
-        return jsonify(colors)
+    #     return jsonify(colors)
         
     return ('you did it.')
     

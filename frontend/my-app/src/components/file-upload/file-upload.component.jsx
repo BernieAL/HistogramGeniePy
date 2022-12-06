@@ -66,9 +66,14 @@ const FileUpload = ({
 
   const sendToBack= async () =>{
       const formData = new FormData()
-      formData.append("images", files)
+      console.log(files)
+      formData.append("images", JSON.stringify(files))
+      for (var pair of formData.entries()){
+        console.log(pair[0]+ ', '+ pair[1]); 
+      }
       const result = await axios.post('http://127.0.0.1:5000/upload',formData, {headers: {'Content-Type':'multipart/form-data'}})  
-    // send as formData to backend - https://www.sammeechward.com/uploading-images-express-and-react
+      console.log(result)
+      // send as formData to backend - https://www.sammeechward.com/uploading-images-express-and-react
   }
 
   const removeFile = (fileName) => {
