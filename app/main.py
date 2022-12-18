@@ -3,7 +3,7 @@
 # https://roytuts.com/upload-and-display-image-using-python-flask/
 # https://roytuts.com/upload-and-display-multiple-images-using-python-and-flask/
 
-
+# recieving filelist from react - https://stackoverflow.com/questions/60483779/send-filelist-to-flask-backend
 
 import os
 from flask import Flask, jsonify, render_template,request
@@ -12,7 +12,7 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 import json
 from flask_cors import CORS
-
+import json
 
 
 
@@ -43,43 +43,58 @@ def upload_form():
 	return render_template('upload.html')
 
 
+
+
+# Reference - multidict methods - https://werkzeug.palletsprojects.com/en/2.2.x/datastructures/#werkzeug.datastructures.MultiDict.get
 @app.route('/upload',methods=['POST'])
 def upload_image():
     
 
-    
-    # print(request.get_data())
-    data = request.form['images']
-    print(data)
 
-    # file = request.files
-    # print(request.files)
-    # for i in file:
-    #     print(file[i])
-    #     print(i)
-    
-    # """If file attribute not on reqeust"""
-    # if 'file' not in request.files:
-    #     flash('NO file part')
-    #     return ('No file on reqeust')
-    
-    # file = request.files['file']
-    # # file = file.resize(150,100),Image.ANTIALIAS)
-    # if file.filename == '':
-    #     flash('No image for uploading')
-    #     return ('No file on reqeust')
 
-    # """
-    # if file is populated and is of allowed type
-    # Pass it a filename and it will return a secure version of it. 
-    # This filename can then safely be stored on a regular file system and passed to os.path.join()
-    # save file to upload folder
-    # render upload.html and pass it the filename
-    # """
-    # if file and allowed_file(file.filename):
-    #     filename = secure_filename(file.filename)
-    #     img_file = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-    #     file.save(img_file)
+
+
+    # data = request.stream.read()
+    # print(data)
+
+    # json = request.get_json()
+    # print(json)
+    # print(request.get_data('file'))
+    # images = request.form.getlist('file')
+    # print(images)
+    
+    
+
+
+
+    
+    """If file attribute not on reqeust"""
+    if 'file' not in request.files:
+        flash('NO file part')
+        return ('No file on reqeust')
+    
+    imageslist=(request.files.getlist('file'))
+    for file in imageslist:
+        print(file)
+
+        # file = request.form['file']
+        # print(file)
+        # file = file.resize(150,100),Image.ANTIALIAS)
+        if file.filename == '':
+            flash('No image for uploading')
+            return ('No file on reqeust')
+
+        """
+        if file is populated and is of allowed type
+        Pass it a filename and it will return a secure version of it. 
+        This filename can then safely be stored on a regular file system and passed to os.path.join()
+        save file to upload folder
+        render upload.html and pass it the filename
+        """
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            img_file = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+            file.save(img_file)
         
         
         

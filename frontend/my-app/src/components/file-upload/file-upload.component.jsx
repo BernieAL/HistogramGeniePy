@@ -17,8 +17,10 @@ import {
 const KILO_BYTES_PER_BYTE = 1000;
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 500000;
 
+//takes nested object keys and converts to array,returns array
 const convertNestedObjectToArray = (nestedObj) =>
   Object.keys(nestedObj).map((key) => nestedObj[key]);
+  
 
 const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
 
@@ -35,12 +37,19 @@ const FileUpload = ({
     fileInputField.current.click();
   };
 
+
+  /**
+   * 
+   * accepts newFiles 
+   * 
+   */
   const addNewFiles = (newFiles) => {
     for (let file of newFiles) {
       if (file.size < maxFileSizeInBytes) {
         if (!otherProps.multiple) {
           return { file };
         }
+        // console.log(file.name)
         files[file.name] = file;
       }
     }
@@ -50,29 +59,103 @@ const FileUpload = ({
   const callUpdateFilesCb = (files) => {
     const filesAsArray = convertNestedObjectToArray(files);
     updateFilesCb(filesAsArray);
+    
   };
 
+
+
+  /**
+   * 
+   * 
+   *
+   */
   const handleNewFileUpload = (e) => {
-    // console.log(e.target)
-    const { files: newFiles } = e.target;
-    // console.log(newFiles)
+    // event.target.files is a filelist object, each item in filelist is a file object
+    // console.log(e.target.files)
+   // new object construction, key = files, value = newFiles
+    // const { files: newFiles } = e.target;
+    const newFiles = e.target.files
+    console.log(newFiles[0].name)
     if (newFiles.length) {
       let updatedFiles = addNewFiles(newFiles);
       setFiles(updatedFiles);
       callUpdateFilesCb(updatedFiles);
+      
     }
     sendToBack()
   };
 
+
+  
+
+  /* Need to access files from state and send to backend
+  
+    uploaded images are stored in files object in state
+  */
+  let temp = []
   const sendToBack= async () =>{
+
       const formData = new FormData()
       console.log(files)
-      formData.append("images", JSON.stringify(files))
-      for (var pair of formData.entries()){
-        console.log(pair[0]+ ', '+ pair[1]); 
+      for(const[key,value] of Object.entries(files)){
+        console.log(`${key}:${value}`);
+        formData.append('file',value)
       }
+      
+      console.log(formData.getAll('file'))
+      // console.log(convertNestedObjectToArray(files))
+      // let filesAsArray = convertNestedObjectToArray(files)
+      // for (var i = 0;i<filesAsArray.length;i++){
+      //   console.log(filesAsArray[i])
+      // }
+      // console.log(updatedFiles)
+      
+      // formData.append('file[]',files)
+      // for (var pair of formData.entries('file[]')) {
+      //   console.log(pair[0]+ ' - ' + pair[1]); 
+      // }
+      // console.log(typeof(files))
+      // Object.keys(files).map((file)=>{
+      //   // console.log(files[file])
+      //   var fileObj = files[file]
+      //   console.log(fileObj)
+      //   formData.append('file',fileObj)
+      // })
+
+
+      // for(let key in files){
+ 
+      //   formData.append('files[][file]', files[key].file, files[key].file.name)
+      //   formData.append('files[][file_type_id]', files[key].fileType)
+      // }
+
+      // console.log(temp)
+      // formData.append('file',JSON.stringify(files))
+
+      for (const value of formData.values()){
+        console.log(value)
+      }
+      // for (const key of formData.keys()) {
+      //   console.log(key);
+      // }
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0]+ ' - ' + pair[1]); 
+      // }
+      // Object.keys(files).map((fileName) => {
+      //   // console.log(Object.keys(files))
+      //   console.log(fileName)
+      //   // console.log(files[fileName])
+      //   let file = files[fileName];
+      //   // console.log(file['size'])
+      //   console.log('file print: ' + file['size'])
+      // })
+      
+      
+
+      
       const result = await axios.post('http://127.0.0.1:5000/upload',formData, {headers: {'Content-Type':'multipart/form-data'}})  
       console.log(result)
+      
       // send as formData to backend - https://www.sammeechward.com/uploading-images-express-and-react
   }
 
@@ -110,7 +193,7 @@ const FileUpload = ({
             // console.log(Object.keys(files))
             // console.log(fileName)
             let file = files[fileName];
-            // console.log(file)
+            
             let isImageFile = file.type.split("/")[0] === "image";
             return (
               //A “key” is a special string attribute you need to include when creating lists of elements. We’ll discuss why it’s important in the next section.
@@ -270,3 +353,4 @@ export default FileUpload;
                   
 
 */
+
