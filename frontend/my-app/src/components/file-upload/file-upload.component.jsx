@@ -126,7 +126,8 @@ const FileUpload = ({
       //   */
       // }    
       const result = await axios.post('http://127.0.0.1:5000/upload',formData, {headers: {'Content-Type':'multipart/form-data'}})  
-      console.log(result)
+      console.log(result['data'])
+      
       
       // send as formData to backend - https://www.sammeechward.com/uploading-images-express-and-react
   }

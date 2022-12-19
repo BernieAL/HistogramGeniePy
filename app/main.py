@@ -105,6 +105,7 @@ def upload_image():
     #run_img returned vals are stored in object where key is current uploaded_file name
     
     result = []
+    # result_json = []
     for uploaded_file in os.listdir(app.config['UPLOAD_FOLDER']):
           img_file = os.path.join(app.config['UPLOAD_FOLDER'],uploaded_file)
           #print(img_file)
@@ -116,20 +117,14 @@ def upload_image():
           current_img_name  = uploaded_file
           current_img_name  = {
                  'palette':paletteColors,
-                 'complementary': complementary_colors
+                 'complementary':complementary_colors
           }
-          result.append(current_img_name )
+          result.append(current_img_name)
+        #   result_json.append(jsonify(current_img_name))
+    # print(result)
 
-    print(result)
-
-    #     #pass path to run_img function
-    #     paletteColors,complementary_colors = run_img.run_main(img_file)
-    #     # print(f"Original palette {paletteColors}")
-    #     # print(f"comeplementary_colors {complementary_colors}")
-    #     colors = {
-    #         'palette':paletteColors,
-    #         'complementary': complementary_colors
-    #     }
+    return json.dumps(result)
+    
 
     #     # #pass dominate colors as array to template for dynamic rendering as inline css
     #     # return render_template('upload.html',filename=filename,palette = paletteColors,
