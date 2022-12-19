@@ -121,7 +121,7 @@ def upload_image():
           }
           result.append(current_img_name)
         #   result_json.append(jsonify(current_img_name))
-    # print(result)
+    print(result)
 
     return json.dumps(result)
     

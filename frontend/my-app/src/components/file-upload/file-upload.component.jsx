@@ -2,6 +2,7 @@
  * 
  * References:
  *    https://stackoverflow.com/questions/24139216/how-can-i-serialize-an-input-file-object-to-json
+ *    // send as formData to backend - https://www.sammeechward.com/uploading-images-express-and-react
  */
 
 
@@ -18,7 +19,8 @@ import {
   PreviewList,
   FileMetaData,
   RemoveFileIcon,
-  InputLabel
+  InputLabel,
+  PalettePreview
 } from "./file-upload.styles";
 
 const KILO_BYTES_PER_BYTE = 1000;
@@ -39,17 +41,14 @@ const FileUpload = ({
 }) => {
   const fileInputField = useRef(null);
   const [files, setFiles] = useState({});
+  const [colors, setColors] = useState({})
 
   const handleUploadBtnClick = () => {
     fileInputField.current.click();
   };
 
 
-  /**
-   * 
-   * Adds uploaded files into state
-   * 
-   */
+  /** Adds uploaded files into state */
   const addNewFiles = (newFiles) => {
     for (let file of newFiles) {
       if (file.size < maxFileSizeInBytes) {
@@ -69,11 +68,15 @@ const FileUpload = ({
     
   };
 
+
+
+  /* 
+    event.target.files is a filelist object, each item in filelist is a file object
+    console.log(e.target.files)
+    new object construction, key = files, value = newFiles
+    const { files: newFiles } = e.target;
+  */
   const handleNewFileUpload = (e) => {
-    // event.target.files is a filelist object, each item in filelist is a file object
-    // console.log(e.target.files)
-   // new object construction, key = files, value = newFiles
-    // const { files: newFiles } = e.target;
     const newFiles = e.target.files
     // console.log(newFiles[0].name)
     if (newFiles.length) {
@@ -127,10 +130,13 @@ const FileUpload = ({
       // }    
       const result = await axios.post('http://127.0.0.1:5000/upload',formData, {headers: {'Content-Type':'multipart/form-data'}})  
       console.log(result['data'])
-      
-      
-      // send as formData to backend - https://www.sammeechward.com/uploading-images-express-and-react
-  }
+
+      // // send colors to component
+      for(const[key,value] of Object.entries(colors)){
+          setColors(value)
+      }
+      console.log(colors)
+    }
 
   const removeFile = (fileName) => {
     delete files[fileName];
@@ -178,7 +184,7 @@ const FileUpload = ({
                       alt={`file preview ${index}`}
                     />
                   )}
-                  {/* <FileMetaData isImageFile={isImageFile}>
+                  <FileMetaData isImageFile={isImageFile}>
                     <span>{file.name}</span>
                     <aside>
                       <span>{convertBytesToKB(file.size)} kb</span>
@@ -187,7 +193,10 @@ const FileUpload = ({
                         onClick={() => removeFile(fileName)}
                       />
                     </aside>
-                  </FileMetaData> */}
+                  </FileMetaData>
+                  <PalettePreview >
+                      
+                  </PalettePreview>
                 </div>
               </PreviewContainer>
             );
