@@ -109,15 +109,19 @@ def upload_image():
           img_file = os.path.join(app.config['UPLOAD_FOLDER'],uploaded_file)
           #print(img_file)
           paletteColors,complementary_colors = run_img.run_main(img_file)
-          print(f"Original palette {paletteColors}")
-          print(f"comeplementary_colors {complementary_colors}") 
-
-          result = []
-          img+(i+=1) = {
+          #print(f"Original palette {paletteColors}")
+          #print(f"comeplementary_colors {complementary_colors}") 
+          
+          #using uploaded_file value as key for object
+          current_img_name  = uploaded_file
+          current_img_name  = {
                  'palette':paletteColors,
                  'complementary': complementary_colors
           }
-          result.append(uploaded_file)
+          result.append(current_img_name )
+
+    print(result)
+
     #     #pass path to run_img function
     #     paletteColors,complementary_colors = run_img.run_main(img_file)
     #     # print(f"Original palette {paletteColors}")
