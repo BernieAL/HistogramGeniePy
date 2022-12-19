@@ -73,9 +73,10 @@ def upload_image():
         flash('NO file part')
         return ('No file on reqeust')
     
+    # Gets list of values under key 'file'
     imageslist=(request.files.getlist('file'))
     for file in imageslist:
-        print(file)
+        # print(file)
 
         # file = request.form['file']
         # print(file)
@@ -96,8 +97,27 @@ def upload_image():
             img_file = os.path.join(app.config['UPLOAD_FOLDER'],filename)
             file.save(img_file)
         
-        
-        
+       
+    #This function goes through all uploaded files and sends each one to run_img to get palette and complementary colors
+    #returned as an object where the key is the filename
+    # os.listdir() method in python is used to get the list of all files and directories in the specified directory. 
+    # img_file = os.path.join(app.config['UPLOAD_FOLDER'],uploaded_file) - for each file in upload folder, this builds actual file path in uploads folder
+    #run_img returned vals are stored in object where key is current uploaded_file name
+    
+    result = []
+    for uploaded_file in os.listdir(app.config['UPLOAD_FOLDER']):
+          img_file = os.path.join(app.config['UPLOAD_FOLDER'],uploaded_file)
+          #print(img_file)
+          paletteColors,complementary_colors = run_img.run_main(img_file)
+          print(f"Original palette {paletteColors}")
+          print(f"comeplementary_colors {complementary_colors}") 
+
+          result = []
+          img+(i+=1) = {
+                 'palette':paletteColors,
+                 'complementary': complementary_colors
+          }
+          result.append(uploaded_file)
     #     #pass path to run_img function
     #     paletteColors,complementary_colors = run_img.run_main(img_file)
     #     # print(f"Original palette {paletteColors}")

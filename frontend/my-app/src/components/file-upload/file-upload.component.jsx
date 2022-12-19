@@ -1,3 +1,10 @@
+/**
+ * 
+ * References:
+ *    https://stackoverflow.com/questions/24139216/how-can-i-serialize-an-input-file-object-to-json
+ */
+
+
 import React, { useRef, useState } from "react";
 import axios from 'axios'
 import {
@@ -40,7 +47,7 @@ const FileUpload = ({
 
   /**
    * 
-   * accepts newFiles 
+   * Adds uploaded files into state
    * 
    */
   const addNewFiles = (newFiles) => {
@@ -62,20 +69,13 @@ const FileUpload = ({
     
   };
 
-
-
-  /**
-   * 
-   * 
-   *
-   */
   const handleNewFileUpload = (e) => {
     // event.target.files is a filelist object, each item in filelist is a file object
     // console.log(e.target.files)
    // new object construction, key = files, value = newFiles
     // const { files: newFiles } = e.target;
     const newFiles = e.target.files
-    console.log(newFiles[0].name)
+    // console.log(newFiles[0].name)
     if (newFiles.length) {
       let updatedFiles = addNewFiles(newFiles);
       setFiles(updatedFiles);
@@ -88,71 +88,43 @@ const FileUpload = ({
 
   
 
-  /* Need to access files from state and send to backend
+  /*
+  files object in state has the structure
+    files = {
+      img_1.jpg:File {name: 'img_1.jpg', lastModified: 1635440969159, lastModifiedDate: Thu Oct 28 2021 13:09:29 GMT-0400 (Eastern Daylight Time), webkitRelativePath: '', size: 37949, …}
+      img_2.jpg: File {name: 'img_2.jpg', lastModified: 1631824994866, lastModifiedDate: Thu Sep 16 2021 16:43:14 GMT-0400 (Eastern Daylight Time), webkitRelativePath: '', size: 125551, …}
+      img_4.jpeg: File {name: 'img_4.jpeg', lastModified: 1668789510322, lastModifiedDate: Fri Nov 18 20}
+    }
+
+    where the key is the name of uploaded image
+    and File is the literal file object uploaded
+    Each uploaded file object has the structure
+        File {name: 'img_1.jpg', lastModified: 1635440969159, lastModifiedDate: Thu Oct 28 2021 13:09:29 GMT-0400 (Eastern Daylight Time), webkitRelativePath: '', size: 37949, …}
   
-    uploaded images are stored in files object in state
-  */
+    iterate all entries in files object by key,val pair
+    each val (literal file object) is appended to formdata under the same key 'file'
+    Then accessed on Flask backend using reqeust.files.getlist('file')
+        */
   let temp = []
   const sendToBack= async () =>{
 
       const formData = new FormData()
-      console.log(files)
+      // console.log(files)
       for(const[key,value] of Object.entries(files)){
-        console.log(`${key}:${value}`);
+        // console.log(`${key}:${value}`);
         formData.append('file',value)
       }
-      
       console.log(formData.getAll('file'))
-      // console.log(convertNestedObjectToArray(files))
-      // let filesAsArray = convertNestedObjectToArray(files)
-      // for (var i = 0;i<filesAsArray.length;i++){
-      //   console.log(filesAsArray[i])
-      // }
-      // console.log(updatedFiles)
-      
-      // formData.append('file[]',files)
-      // for (var pair of formData.entries('file[]')) {
-      //   console.log(pair[0]+ ' - ' + pair[1]); 
-      // }
-      // console.log(typeof(files))
-      // Object.keys(files).map((file)=>{
-      //   // console.log(files[file])
-      //   var fileObj = files[file]
-      //   console.log(fileObj)
-      //   formData.append('file',fileObj)
-      // })
+      // output: {img_1.jpg: File, img_2.jpg: File, img_4.jpeg: File}
 
-
-      // for(let key in files){
- 
-      //   formData.append('files[][file]', files[key].file, files[key].file.name)
-      //   formData.append('files[][file_type_id]', files[key].fileType)
-      // }
-
-      // console.log(temp)
-      // formData.append('file',JSON.stringify(files))
-
-      for (const value of formData.values()){
-        console.log(value)
-      }
-      // for (const key of formData.keys()) {
-      //   console.log(key);
-      // }
-      // for (var pair of formData.entries()) {
-      //   console.log(pair[0]+ ' - ' + pair[1]); 
-      // }
-      // Object.keys(files).map((fileName) => {
-      //   // console.log(Object.keys(files))
-      //   console.log(fileName)
-      //   // console.log(files[fileName])
-      //   let file = files[fileName];
-      //   // console.log(file['size'])
-      //   console.log('file print: ' + file['size'])
-      // })
-      
-      
-
-      
+      // for (const value of formData.values()){
+      //   console.log(value)
+      //   /* output: 
+      //       img_1.jpg:[object File]
+      //       img_2.jpg:[object File]
+      //       img_4.jpeg:[object File]
+      //   */
+      // }    
       const result = await axios.post('http://127.0.0.1:5000/upload',formData, {headers: {'Content-Type':'multipart/form-data'}})  
       console.log(result)
       
@@ -253,10 +225,6 @@ export default FileUpload;
           return (
               <input type="file" ref={fileInputField} />
           )
-
-
-
-
 
     PROPS for File-upload.component
             label -> determines labels of the component
