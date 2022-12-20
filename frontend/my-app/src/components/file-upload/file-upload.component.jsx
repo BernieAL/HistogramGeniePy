@@ -20,7 +20,9 @@ import {
   FileMetaData,
   RemoveFileIcon,
   InputLabel,
-  PalettePreview
+  PalettePreview,
+  UL,
+  PaletteSlice
 } from "./file-upload.styles";
 
 const KILO_BYTES_PER_BYTE = 1000;
@@ -129,13 +131,18 @@ const FileUpload = ({
       //   */
       // }    
       const result = await axios.post('http://127.0.0.1:5000/upload',formData, {headers: {'Content-Type':'multipart/form-data'}})  
-      console.log(result['data'])
+      var img_res = result['data']
 
-      // // send colors to component
-      for(const[key,value] of Object.entries(colors)){
-          setColors(value)
+      for(var i = 0; i<img_res.length;i++){
+        console.log(img_res[i])
       }
-      console.log(colors)
+
+      
+      // // // send colors to component
+      // for(const[key,value] of Object.entries(files)){
+      //     setColors(files.fileName:)
+      // }
+      // console.log(colors)
     }
 
   const removeFile = (fileName) => {
@@ -164,7 +171,7 @@ const FileUpload = ({
       </FileUploadContainer>
      
      <FilePreviewContainer>
-        <span>To Upload</span>
+        <span>Images</span>
         <PreviewList>
           {/* this returns list of image elements
           iterating through each file in the files state */}
@@ -177,28 +184,41 @@ const FileUpload = ({
             return (
               //A “key” is a special string attribute you need to include when creating lists of elements. We’ll discuss why it’s important in the next section.
               <PreviewContainer key={fileName}>
-                <div>
-                  {isImageFile && (
-                    <ImagePreview
-                      src={URL.createObjectURL(file)}
-                      alt={`file preview ${index}`}
-                    />
-                  )}
-                  <FileMetaData isImageFile={isImageFile}>
-                    <span>{file.name}</span>
-                    <aside>
-                      <span>{convertBytesToKB(file.size)} kb</span>
-                      <RemoveFileIcon
-                        className="fas fa-trash-alt"
-                        onClick={() => removeFile(fileName)}
+                  <div>
+                    <UL>
+                      {isImageFile && (
+                      <ImagePreview
+                        src={URL.createObjectURL(file)}
+                        alt={`file preview ${index}`}
                       />
-                    </aside>
-                  </FileMetaData>
-                  <PalettePreview >
+                      )}
+                      <PalettePreview >
+                        <PaletteSlice>
+                          
+                        </PaletteSlice>
+                      </PalettePreview>
                       
-                  </PalettePreview>
-                </div>
+                    </UL>
+
+                    
+                    
+                    
+                    <FileMetaData isImageFile={isImageFile}>
+                      <span>{file.name}</span>
+                      <aside>
+                        <span>{convertBytesToKB(file.size)} kb</span>
+                        <RemoveFileIcon
+                          className="fas fa-trash-alt"
+                          onClick={() => removeFile(fileName)}
+                        />
+                      </aside>
+                    </FileMetaData>
+                    
+                    
+                    
+                  </div>
               </PreviewContainer>
+              
             );
           })}
         </PreviewList>

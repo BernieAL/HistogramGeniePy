@@ -138,7 +138,7 @@ export const FilePreviewContainer = styled.article`
 `;
 
 export const PreviewList = styled.section`
-  display: flex;
+  display: inline;
   flex-wrap: wrap;
   margin-top: 10px;
 
@@ -178,8 +178,8 @@ export const RemoveFileIcon = styled.i`
 
 export const PreviewContainer = styled.section`
   padding: 0.25rem;
-  width: 20%;
-  height: 120px;
+  width: 50%;
+  height: 50%;
   border-radius: 6px;
   box-sizing: border-box;
 
@@ -216,9 +216,56 @@ export const ImagePreview = styled.img`
   height: 100%;
 `;
 
-export const PalettePreview = styled.img`
+
+export const PalettePreview = styled.div`
+  
   border-radius: 6px;
-  width: 100%;
-  height: 100%
-  background-color: black
-`
+  width: 500px;
+  height:100px;
+  background:black;
+  margin-left:20px;
+`;
+
+
+export const PaletteSlice = styled.div`
+  
+  border-radius: 6px;
+  width: 100px;
+  height:125px;
+  background:red;
+  
+`;
+
+export const UL = styled.ul`
+  display:flex
+`;
+
+
+// grid colors section
+export const section1 = styled.section1`  
+
+`;
+export const h1  = styled.h1`  
+
+`;
+
+export const colors = styled.class`
+
+`;
+
+
+export const color = styled.class`
+
+`;
+
+
+export const color_img = styled.class`
+
+`;
+
+export const color_text = styled.class`
+    
+`;
+
+
+

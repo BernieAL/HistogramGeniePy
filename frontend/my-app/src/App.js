@@ -19,11 +19,11 @@ function App() {
       <form onSubmit={handleSubmit}>
         <FileUpload
           accept=".jpg,.png,.jpeg"
-          label="Profile Image(s)"
+          label="Uploaded Images"
           multiple
           updateFilesCb={updateUploadedFiles}
         />
-        <button type="submit">Create New User</button>
+        {/* <button type="submit">Create New User</button> */}
       </form>
     </div>
   );
