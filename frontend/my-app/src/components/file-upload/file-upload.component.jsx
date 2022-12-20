@@ -185,13 +185,18 @@ const FileUpload = ({
               //A “key” is a special string attribute you need to include when creating lists of elements. We’ll discuss why it’s important in the next section.
               <PreviewContainer key={fileName}>
                   <div>
+                    
                     <UL>
+                      
+                      {/* actual image */}
                       {isImageFile && (
                       <ImagePreview
                         src={URL.createObjectURL(file)}
                         alt={`file preview ${index}`}
                       />
                       )}
+                      
+                      {/* palette for current image */}
                       <PalettePreview >
                         <PaletteSlice>
                           
@@ -200,9 +205,9 @@ const FileUpload = ({
                       
                     </UL>
 
+
                     
-                    
-                    
+                    {/* file metadata overlayed on img */}
                     <FileMetaData isImageFile={isImageFile}>
                       <span>{file.name}</span>
                       <aside>
@@ -213,8 +218,6 @@ const FileUpload = ({
                         />
                       </aside>
                     </FileMetaData>
-                    
-                    
                     
                   </div>
               </PreviewContainer>
