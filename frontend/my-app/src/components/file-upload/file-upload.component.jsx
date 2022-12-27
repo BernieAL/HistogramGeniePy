@@ -55,7 +55,8 @@ const FileUpload = ({
     for (let file of newFiles) {
       if (file.size < maxFileSizeInBytes) {
         if (!otherProps.multiple) {
-          return { file };
+        //   coverting file object to javascript object, and returning as javascript object
+            return { file };
         }
         // console.log(file.name)
         files[file.name] = file;
@@ -185,25 +186,15 @@ const FileUpload = ({
               //A “key” is a special string attribute you need to include when creating lists of elements. We’ll discuss why it’s important in the next section.
               <PreviewContainer key={fileName}>
                   <div>
-                    <UL>
+                    
                       {isImageFile && (
                       <ImagePreview
                         src={URL.createObjectURL(file)}
                         alt={`file preview ${index}`}
                       />
                       )}
-                      <PalettePreview >
-                        <PaletteSlice>
-                          
-                        </PaletteSlice>
-                      </PalettePreview>
                       
-                    </UL>
-
-                    
-                    
-                    
-                    <FileMetaData isImageFile={isImageFile}>
+                      <FileMetaData isImageFile={isImageFile}>
                       <span>{file.name}</span>
                       <aside>
                         <span>{convertBytesToKB(file.size)} kb</span>
@@ -212,7 +203,7 @@ const FileUpload = ({
                           onClick={() => removeFile(fileName)}
                         />
                       </aside>
-                    </FileMetaData>
+                      </FileMetaData>
                     
                     
                     

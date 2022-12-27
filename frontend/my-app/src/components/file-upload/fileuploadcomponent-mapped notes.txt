@@ -1,0 +1,40 @@
+
+// This is a file that explains each piece of code
+
+
+
+
+/* 
+handleNewFileUpload
+    gets files list object off event and store as newFiles
+    if length of fileList object greather than 0
+        set updatedFiles to be return of addNewFiles(newFiles)
+                addNewFiles returns 
+                SEE addNewFiles(newFiles) for more information
+        then call setFiles with updatedFiles
+                SEE setFiles
+*/
+
+
+/* 
+
+
+*/
+
+const handleNewFileUpload= (e) =>{
+    const newFiles = e.target.files
+    if (newFiles.length > 0) {
+        // Updatedfiles = return of addnewfiles 
+        // addnewfiles returns
+        let updatedFiles = addNewFiles(newFiles)
+        setFiles(updatedFiles)
+        callUpdatedFilesCb(updatedFiiles)
+    }
+    
+}
+
+
+
+
+
+
