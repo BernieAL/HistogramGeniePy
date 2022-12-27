@@ -55,7 +55,8 @@ const FileUpload = ({
     for (let file of newFiles) {
       if (file.size < maxFileSizeInBytes) {
         if (!otherProps.multiple) {
-          return { file };
+        //   coverting file object to javascript object, and returning as javascript object
+            return { file };
         }
         // console.log(file.name)
         files[file.name] = file;
@@ -217,7 +218,7 @@ const FileUpload = ({
                           onClick={() => removeFile(fileName)}
                         />
                       </aside>
-                    </FileMetaData>
+                      </FileMetaData>
                     
                   </div>
               </PreviewContainer>
